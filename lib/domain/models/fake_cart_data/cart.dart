@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:fake_store_package/models/cart/cart.dart' as FakeStoreCart;
+import 'cart_products.dart'; // ✅ Importamos el modelo separado
 
 part 'cart.g.dart';
 
@@ -16,7 +18,7 @@ class Cart {
   final DateTime date;
 
   @JsonKey(name: "products")
-  final List<CartProducts> products;
+  final List<CartProducts> products; // ✅ Ahora sí está definido antes de usarse
 
   const Cart({
     required this.id,
@@ -32,22 +34,14 @@ class Cart {
   // Métodos para convertir la fecha
   static DateTime _fromJsonDate(dynamic date) => DateTime.parse(date as String);
   static String _toJsonDate(DateTime date) => date.toIso8601String();
-}
-@JsonSerializable()
-@immutable
-class CartProducts {
-  @JsonKey(name: "productId")
-  final int productId;
 
-  @JsonKey(name: "quantity")
-  final int quantity;
-
-  const CartProducts({
-    required this.productId,
-    required this.quantity,
-  });
-
-  factory CartProducts.fromJson(Map<String, dynamic> json) => _$CartProductsFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CartProductsToJson(this);
+  /// Conversión desde `FakeStoreCart`
+  factory Cart.fromFakeStoreCart(FakeStoreCart.Cart c) {
+    return Cart(
+      id: c.id,
+      userId: c.userId,
+      date: c.date,
+      products: c.products.map((p) => CartProducts.fromFakeStoreCartProduct(p)).toList(),
+    );
+  }
 }

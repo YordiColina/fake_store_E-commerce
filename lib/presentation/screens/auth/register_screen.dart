@@ -1,3 +1,5 @@
+import 'package:atomic_design/templates/atomic_register_template.dart';
+import 'package:fake_store_e_commerce/domain/models/fake_user/user.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -8,8 +10,16 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+
+  void onRegister(Map<String, String> cd) {}
+  final List<String> labels = [
+ 'nombre',
+  'apellido',
+  'email',
+  'password',
+  ];
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return AtomicTemplateRegister(onRegister: onRegister, labels: labels, buttonText: "hello");
   }
 }

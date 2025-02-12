@@ -1,11 +1,12 @@
-import 'package:fake_store_package/models/user/user.dart';
+import 'package:fake_store_e_commerce/domain/models/fake_user/user.dart';
+import 'package:fake_store_e_commerce/domain/models/fake_user/user.dart' as FakeStoreUser;
 import 'package:json_annotation/json_annotation.dart';
+
 
 part 'get_user.g.dart';
 
 @JsonSerializable()
 class GetUser {
-
   @JsonKey(name: "email")
   final String email;
 
@@ -33,12 +34,20 @@ class GetUser {
     required this.phone,
   });
 
-  factory GetUser.fromJson(Map<String, dynamic> json) => _$GetUserFromJson(json);
+  factory GetUser.fromJson(Map<String, dynamic> json) =>
+      _$GetUserFromJson(json);
 
   Map<String, dynamic> toJson() => _$GetUserToJson(this);
+
+  factory GetUser.fromFakeStoreUser(FakeStoreUser.User user) {
+    return GetUser(
+      email: user.email,
+      username: user.username,
+      password: user.password,
+      name: Name.fromFakeStoreName(user.name),  // 🔥 Conversión explícita
+      address: Address.fromFakeStoreAddress(user.address),  // 🔥 Conversión explícita
+      phone: user.phone,
+    );
+  }
+
 }
-
-
-
-
-

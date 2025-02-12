@@ -1,3 +1,4 @@
+import 'package:fake_store_package/models/products/product.dart' as FakeStoreProduct;
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -36,4 +37,16 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
+
+  /// Método de conversión desde el modelo del paquete
+  factory Product.fromFakeStoreProduct(FakeStoreProduct.Product p) {
+    return Product(
+      id: p.id,
+      title: p.title,
+      price: p.price,
+      category: p.category,
+      description: p.description,
+      image: p.image,
+    );
+  }
 }

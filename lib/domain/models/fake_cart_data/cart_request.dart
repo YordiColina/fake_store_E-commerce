@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'cart.dart';
+import 'package:fake_store_package/models/cart/cart_request.dart' as FakeStoreCartRequest;
+import 'cart_products.dart'; // ✅ Importamos el modelo separado
 
 part 'cart_request.g.dart';
 
 @JsonSerializable()
 @immutable
 class CartRequest {
-
   @JsonKey(name: "userId")
   final int userId;
 

@@ -1,3 +1,4 @@
+import 'package:atomic_design/pages/atomic_loginpage.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -8,8 +9,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  void onLogin(String email, String password) {
+    Navigator.pushNamed(context, '/home');
+  }
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return  AtomicLoginPage(onLogin: onLogin);
   }
 }
