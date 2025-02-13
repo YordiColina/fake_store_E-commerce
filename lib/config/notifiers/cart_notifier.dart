@@ -1,13 +1,14 @@
+
+import 'package:fake_store_package/models/cart/cart_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/models/fake_cart_data/cart.dart';
-import '../../domain/models/fake_cart_data/cart_request.dart';
 import '../../domain/usecases/cart_usecases/add_cart_usecase.dart';
 import '../../domain/usecases/cart_usecases/delete_cart_usecase.dart';
 import '../../domain/usecases/cart_usecases/get_cart_usecase.dart';
 import '../../domain/usecases/cart_usecases/update_cart_usecase.dart';
 
 
-class CartNotifier extends StateNotifier<Cart?> {
+class CartNotifier extends StateNotifier<List<Cart?>> {
   final AddCartUseCase addCartUseCase;
   final DeleteCartUseCase deleteCartUseCase;
   final GetCartUseCase getCartUseCase;
@@ -18,11 +19,11 @@ class CartNotifier extends StateNotifier<Cart?> {
     required this.deleteCartUseCase,
     required this.getCartUseCase,
     required this.updateCartUseCase,
-  }) : super(null); // Estado inicial: carrito vacío (null)
+  }) : super([]); // Estado inicial: carrito vacío (null)
 
   // Obtener el carrito por ID
-  Future<Cart> getCart(int id) async {
-    final cart = await getCartUseCase.execute(id);
+  Future <List<Cart>> getCart(int id) async {
+    dynamic cart = await getCartUseCase.execute(id);
     state = cart; // Actualiza el estado con el carrito obtenido
     return cart;
   }
@@ -44,7 +45,7 @@ class CartNotifier extends StateNotifier<Cart?> {
   // Eliminar un carrito
   Future<void> deleteCart(CartRequest cart, int id) async {
     await deleteCartUseCase.execute(cart, id);
-    state = null; // Limpia el estado después de eliminar el carrito
+    state = []; // Limpia el estado después de eliminar el carrito
   }
 }
 

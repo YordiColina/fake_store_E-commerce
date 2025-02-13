@@ -1,5 +1,4 @@
 import 'package:atomic_design/templates/atomic_register_template.dart';
-import 'package:fake_store_e_commerce/domain/models/fake_user/user.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {

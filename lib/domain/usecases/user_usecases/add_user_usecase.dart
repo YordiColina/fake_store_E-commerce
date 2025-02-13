@@ -1,5 +1,6 @@
+import 'package:fake_store_package/models/user/user.dart';
 import '../../models/fake_user/repository/user_repository.dart';
-import '../../models/fake_user/user.dart';
+
 
 class AddUserUseCase {
   final UserRepository _userRepository;

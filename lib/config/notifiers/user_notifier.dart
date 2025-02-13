@@ -1,10 +1,11 @@
+import 'package:fake_store_package/models/user/get_user.dart';
+import 'package:fake_store_package/models/user/user.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../domain/models/fake_user/user.dart';
 import '../../../domain/usecases/user_usecases/add_user_usecase.dart';
 import '../../../domain/usecases/user_usecases/get_user_usecase.dart';
 
 
-class UserNotifier extends StateNotifier<User?> {
+class UserNotifier extends StateNotifier<GetUser?> {
   final AddUserUseCase addUserUseCase;
   final GetUserUseCase getUserUseCase;
 
@@ -14,7 +15,7 @@ class UserNotifier extends StateNotifier<User?> {
   }) : super(null); // Estado inicial: usuario vacío (null)
 
   // Obtener un usuario por ID
-  Future<User> getUser(int id) async {
+  Future<GetUser> getUser(int id) async {
     final user = await getUserUseCase.execute(id);
     state = user; // Actualiza el estado con el usuario obtenido
     return user;

@@ -1,8 +1,6 @@
 import 'package:fake_store_e_commerce/domain/models/fake_auth/repository/auth_repository.dart';
+import 'package:fake_store_package/models/auth/login_request.dart';
 
-import '../../models/fake_auth/login_request.dart';
-import '../../models/fake_products/product.dart';
-import '../../models/fake_products/repository/product_repository.dart';
 
 class LoginUseCase {
   final AuthRepository _authRepository;

@@ -236,7 +236,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "64da7bfb2f01b275d7dee74cd91cf65fac246d8d"
+      resolved-ref: "3a4770301a537f035208e015aacf6744509d58c3"
       url: "https://github.com/YordiColina/fake_store_package.git"
     source: git
     version: "0.0.1"

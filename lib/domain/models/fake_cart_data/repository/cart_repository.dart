@@ -1,4 +1,4 @@
-import 'package:fake_store_e_commerce/domain/models/fake_cart_data/cart_request.dart';
+import 'package:fake_store_package/models/cart/cart_request.dart';
 
 import '../cart.dart';
 

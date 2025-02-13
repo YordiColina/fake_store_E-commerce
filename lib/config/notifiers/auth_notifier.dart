@@ -1,5 +1,5 @@
+import 'package:fake_store_package/models/auth/login_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/models/fake_auth/login_request.dart';
 import '../../domain/usecases/auth_usecases/login_usecase.dart';
 
 class AuthNotifier extends StateNotifier<bool> {

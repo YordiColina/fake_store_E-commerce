@@ -1,7 +1,8 @@
+import 'package:fake_store_package/models/cart/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:fake_store_package/models/cart/cart.dart' as FakeStoreCart;
-import 'cart_products.dart'; // ✅ Importamos el modelo separado
+ // Importamos el modelo CartProducts
 
 part 'cart.g.dart';
 
@@ -18,7 +19,7 @@ class Cart {
   final DateTime date;
 
   @JsonKey(name: "products")
-  final List<CartProducts> products; // ✅ Ahora sí está definido antes de usarse
+  final List<CartProducts> products;
 
   const Cart({
     required this.id,
@@ -41,7 +42,7 @@ class Cart {
       id: c.id,
       userId: c.userId,
       date: c.date,
-      products: c.products.map((p) => CartProducts.fromFakeStoreCartProduct(p)).toList(),
+      products: c.products
     );
   }
 }

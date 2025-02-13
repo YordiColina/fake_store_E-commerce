@@ -7,7 +7,7 @@ class GetCartUseCase {
 
   GetCartUseCase(this._cartRepository);
 
-  Future<Cart> execute(int id) {
+  Future<List<Cart>> execute(int id) {
     return _cartRepository.getCart(id);
   }
 }

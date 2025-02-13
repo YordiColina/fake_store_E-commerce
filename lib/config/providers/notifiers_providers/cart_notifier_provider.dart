@@ -7,7 +7,7 @@ import '../../../domain/usecases/cart_usecases/update_cart_usecase.dart';
 import '../../notifiers/cart_notifier.dart';
 import '../repository_providers/cart_repository_provider.dart';
 
-final cartNotifierProvider = StateNotifierProvider<CartNotifier, Cart?>((ref) {
+final cartNotifierProvider = StateNotifierProvider<CartNotifier, List<Cart?>>((ref) {
   final cartRepository = ref.watch(cartRepositoryProvider);
   return CartNotifier(
     addCartUseCase: AddCartUseCase(cartRepository),
