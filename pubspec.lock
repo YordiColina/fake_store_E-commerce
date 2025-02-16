@@ -43,7 +43,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "92e65cbee43db50b2ef243bcd6507971b2d18524"
+      resolved-ref: "3927b0433c9a4ea735285a2d3fa82c9370d8ad92"
       url: "https://github.com/YordiColina/atomic_design_package.git"
     source: git
     version: "0.0.1"

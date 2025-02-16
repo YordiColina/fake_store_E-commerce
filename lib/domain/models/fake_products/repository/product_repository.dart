@@ -1,4 +1,5 @@
-import '../product.dart';
+import 'package:fake_store_package/models/products/product.dart';
+
 
 abstract class ProductRepository {
   Future<List<Product>> getProducts();

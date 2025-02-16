@@ -1,7 +1,9 @@
+import 'package:fake_store_package/models/products/product.dart';
 import 'package:flutter/material.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key});
+ final Product product;
+  const DetailScreen({super.key, required this.product});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();

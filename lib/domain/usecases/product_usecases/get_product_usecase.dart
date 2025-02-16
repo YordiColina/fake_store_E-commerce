@@ -1,4 +1,4 @@
-import '../../models/fake_products/product.dart';
+import 'package:fake_store_package/models/products/product.dart';
 import '../../models/fake_products/repository/product_repository.dart';
 
 class GetProductUseCase {

@@ -8,5 +8,9 @@ class AuthApiImplementation implements AuthRepository {
   @override
   Future<void> login(LoginRequest loginRequest) async {
    final result = await fakeStore.login(loginRequest);
+    return result.fold(
+      (error) => throw Exception('Error al iniciar sesión: $error'),
+      (loginSuccess) => loginSuccess,
+    );
   }
 }

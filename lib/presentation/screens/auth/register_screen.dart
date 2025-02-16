@@ -19,6 +19,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    return AtomicTemplateRegister(onRegister: onRegister, labels: labels, buttonText: "hello");
+    return AtomicTemplateRegister(onRegister: onRegister, labels: labels, buttonText: "hello", fieldsNumber: 4, iconSize: 50,);
   }
 }

@@ -1,6 +1,6 @@
 // Provider para el ProductNotifier
+import 'package:fake_store_package/models/products/product.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../domain/models/fake_products/product.dart';
 import '../../../domain/usecases/product_usecases/get_product_usecase.dart';
 import '../../../domain/usecases/product_usecases/get_products_by_category_usecase.dart';
 import '../../../domain/usecases/product_usecases/get_products_usecase.dart';
