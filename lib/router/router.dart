@@ -3,6 +3,7 @@ import 'package:fake_store_e_commerce/presentation/screens/catalog/catalog_scree
 import 'package:fake_store_package/models/products/product.dart';
 import 'package:go_router/go_router.dart';
 
+import '../presentation/screens/auth/register_screen.dart';
 import '../presentation/screens/details/detail_screen.dart';
 import '../presentation/screens/home/home_screen.dart';
 
@@ -18,6 +19,11 @@ final GoRouter router = GoRouter(
       path: '/login',
       name: 'Login',
       builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/Register',
+      name: 'Register',
+      builder: (context, state) => const RegisterScreen(),
     ),
     GoRoute(
       path: '/catalog',

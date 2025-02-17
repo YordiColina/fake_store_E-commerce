@@ -13,7 +13,14 @@ class ProductNotifier extends StateNotifier<List<Product>> {
     required this.getProductUseCase,
     required this.getProductsByCategoryUseCase,
     required this.getProductsUseCase,
-  }) : super([]); // Estado inicial: lista vacía
+  }) : super([]) {
+    _fetchProducts(); // Llama a la función al inicializar
+  }
+
+  Future<void> _fetchProducts() async {
+    final products = await getProductsUseCase.execute();
+    state = products;
+  }
 
   Future<Product> getProduct(int id) async {
     final product = await getProductUseCase.execute(id);
@@ -22,14 +29,13 @@ class ProductNotifier extends StateNotifier<List<Product>> {
 
   Future<List<Product>> getProductsByCategory(String category) async {
     final products = await getProductsByCategoryUseCase.execute(category);
-    state = products; // Actualiza el estado con los productos de la categoría
+    state = products;
     return products;
   }
 
   Future<List<Product>> getAllProducts() async {
     final products = await getProductsUseCase.execute();
-    state = products; // Actualiza el estado con todos los productos
+    state = products;
     return products;
   }
 }
-
