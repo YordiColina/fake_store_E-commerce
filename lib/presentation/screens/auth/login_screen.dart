@@ -12,17 +12,17 @@ class LoginScreen extends ConsumerWidget{
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void onLogin(String email, String password) async {
+    List<String> isValidate = [];
+    void onLogin() async {
       final authNotifier = ref.read(authNotifierProvider.notifier);
-
-      await authNotifier.login(LoginRequest(username: email, password: password)); // Llama a la función de autenticación
+      await authNotifier.login(LoginRequest(username: isValidate[0], password: isValidate[1])); // Llama a la función de autenticación
 
       final loginSuccess = ref.read(authNotifierProvider); // Obtiene el estado actualizado
 
       print("Login status: $loginSuccess");
 
       if (loginSuccess) {
-        Navigator.pushNamed(context, '/home');
+        context.go('/');
       }
     }
 
@@ -30,14 +30,19 @@ class LoginScreen extends ConsumerWidget{
       icon: Icons.login,
       title: 'Fake store',
       buttonText: 'Iniciar sesión',
-      labels: ['Correo', 'Contraseña'],
+      labels: ['Usuario', 'Contraseña'],
       fieldsNumber: 2,
       subTitle: 'Iniciar sesión',
       titleColor: const Color.fromRGBO(158, 123, 187, 1.0),
       iconColor: const Color.fromRGBO(158, 123, 187, 1.0),
       iconSize: 50,
-      onBack: () {context.go('/');},
-      fontWeight: FontWeight.bold, onPressed: () {  }, onFieldsFilled: (bool ) {  },);
+      goToRegister: () {context.go('/Register');},
+      fontWeight: FontWeight.bold, onPressed: () { onLogin();  }, onFieldsFilled: (values) {
+        print(values[0]);
+        isValidate = values;
+        isValidate[1];
+
+    },);
   }
   }
 

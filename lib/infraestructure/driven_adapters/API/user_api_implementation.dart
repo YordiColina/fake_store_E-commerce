@@ -6,12 +6,15 @@ import 'package:fake_store_package/models/user/user.dart';
 class UserApiImplementation implements UserRepository {
   final fakeStore = FakeStorePackage();
   @override
-  Future<void> createUser(User user) async {
+  Future<Map<String,dynamic>> createUser(User user) async {
     // Enviar el usuario convertido a FakeStore
     final result = await fakeStore.createUser(user);
     return result.fold(
       (error) => throw Exception('Error al crear el usuario: $error'),
-      (user) => user,
+      (user) {
+        print('Usuario creado con éxito: $user');
+        return user;
+    },
     );
   }
 

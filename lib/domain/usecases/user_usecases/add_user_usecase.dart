@@ -7,7 +7,7 @@ class AddUserUseCase {
 
   AddUserUseCase(this._userRepository);
 
-  Future<void> execute(User user) async {
+  Future<Map<String,dynamic>> execute(User user) async {
     return _userRepository.createUser(user);
   }
 }
