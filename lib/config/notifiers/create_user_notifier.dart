@@ -13,12 +13,18 @@ class CreateUserNotifier extends StateNotifier<bool> {
   }) : super(false); // Estado inicial: usuario vacío (null)
 
 
-  // Agregar un usuario
-  Future<Map<String,dynamic>> addUser(User user) async {
-  final userResult = await addUserUseCase.execute(user);
-  state = userResult.isNotEmpty; // Actualiza el estado con el resultado de la operación
-  return userResult;
+  Future<Map<String, dynamic>> addUser(User user) async {
+    final userResult = await addUserUseCase.execute(user);
+
+    if (userResult.isNotEmpty) {
+      state = true; // Usuario creado con éxito
+    } else {
+      state = false; // Falló la creación
+    }
+
+    return userResult;
   }
+
 }
 
 // Provider para el UserNotifier

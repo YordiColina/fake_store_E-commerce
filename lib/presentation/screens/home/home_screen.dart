@@ -96,22 +96,11 @@ class HomeScreen extends ConsumerWidget {
           ),
 
           Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                AtomicButton(label: "Iniciar sesión",
-                    onPressed: () {
-                      context.go('/Login');
-                    }
-                ),
-
-                AtomicButton(label: "registrarse",
-                    onPressed: () {
-                      context.go('/Register');
-                    }
-                )
-              ],
+            padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+            child: AtomicButton(label: "Nuestros productos",
+                onPressed: () {
+                  context.go('/Catalog');
+                }
             ),
           )
         ],

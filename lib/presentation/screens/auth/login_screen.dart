@@ -22,7 +22,7 @@ class LoginScreen extends ConsumerWidget{
       print("Login status: $loginSuccess");
 
       if (loginSuccess) {
-        context.go('/');
+        context.go('/Home');
       }
     }
 
@@ -38,10 +38,7 @@ class LoginScreen extends ConsumerWidget{
       iconSize: 50,
       goToRegister: () {context.go('/Register');},
       fontWeight: FontWeight.bold, onPressed: () { onLogin();  }, onFieldsFilled: (values) {
-        print(values[0]);
         isValidate = values;
-        isValidate[1];
-
     },);
   }
   }

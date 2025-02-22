@@ -1,3 +1,4 @@
+import 'package:fake_store_e_commerce/domain/usecases/product_usecases/get_filtered_products_usecase.dart';
 import 'package:fake_store_package/models/products/product.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/usecases/product_usecases/get_product_usecase.dart';
@@ -8,8 +9,10 @@ class ProductNotifier extends StateNotifier<List<Product>> {
   final GetProductUseCase getProductUseCase;
   final GetProductsByCategoryUseCase getProductsByCategoryUseCase;
   final GetProductsUseCase getProductsUseCase;
+  final GetFilteredProductsUseCase getFilteredProductsUseCase;
 
-  ProductNotifier({
+  ProductNotifier( {
+    required this.getFilteredProductsUseCase,
     required this.getProductUseCase,
     required this.getProductsByCategoryUseCase,
     required this.getProductsUseCase,
@@ -35,6 +38,15 @@ class ProductNotifier extends StateNotifier<List<Product>> {
 
   Future<List<Product>> getAllProducts() async {
     final products = await getProductsUseCase.execute();
+    state = products;
+    return products;
+  }
+
+  Future<List<Product>> getFilteredProducts(String query, List<Product> items) async {
+    final products = items.where((product) {
+      return product.title.toLowerCase().contains(query.toLowerCase()) ||
+          product.description.toLowerCase().contains(query.toLowerCase());
+    }).toList();
     state = products;
     return products;
   }

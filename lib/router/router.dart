@@ -12,13 +12,13 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      name: 'Home',
-      builder: (context, state) => const HomeScreen(),
-    ),
-    GoRoute(
-      path: '/login',
       name: 'Login',
       builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/Home',
+      name: 'Home',
+      builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
       path: '/Register',
@@ -26,15 +26,15 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const RegisterScreen(),
     ),
     GoRoute(
-      path: '/catalog',
-      name: 'form',
+      path: '/Catalog',
+      name: 'Catalog',
       builder: (context, state) {
         return const CatalogScreen();
       },
     ),
     GoRoute(
-      path: '/detail',
-      name: 'detail',
+      path: '/Detail',
+      name: 'Detail',
       builder: (context, state) {
         final item = state.extra as Product;
         return DetailScreen(product: item);
