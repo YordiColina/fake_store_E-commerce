@@ -7,14 +7,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../config/providers/notifiers_providers/product_notifier_provider.dart';
 
-class CatalogScreen extends ConsumerStatefulWidget {
-  const CatalogScreen({super.key});
+class SearchScreen extends ConsumerStatefulWidget {
+  const SearchScreen({super.key});
 
   @override
-  _CatalogScreenState createState() => _CatalogScreenState();
+  _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _CatalogScreenState extends ConsumerState<CatalogScreen> {
+class _SearchScreenState extends ConsumerState<SearchScreen> {
   late TextEditingController searchController;
 
   @override
@@ -58,29 +58,43 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
       ),
       body: Column(
         children: [
+
+          Padding(
+            padding: EdgeInsets.only(  top: MediaQuery.of(context).size.height * 0.080,
+              left: 20,
+              right: 20,),
+            child: AtomicSearchField(
+              controller: searchController,
+              onChanged: (query) {
+                productNotifier.getFilteredProducts(query);
+              },),
+          ),
+
+          const SizedBox(height: 20),
+
           Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: AtomicDropdownButton(
                 hintText: "Selecciona una categoría",
                 items: categories.categories,
                 onChanged: (value) {
-              productNotifier.getProductsByCategory(value);
-            }),
+                  productNotifier.getProductsByCategory(value);
+                }),
           ),
 
           const SizedBox(height: 20),
           Expanded(
             child: items.isNotEmpty
                 ? AtomicTemplateCardList(
-                    title: "",
-                    items: items.map((product) => {
-                          'title': product.title,
-                          'price': product.price,
-                          'image': product.image,
-                          'category': product.category,
-                          'description': product.description,
-                        }).toList(),
-                  )
+              title: "",
+              items: items.map((product) => {
+                'title': product.title,
+                'price': product.price,
+                'image': product.image,
+                'category': product.category,
+                'description': product.description,
+              }).toList(),
+            )
                 : const Center(child: CircularProgressIndicator()),
           ),
         ],

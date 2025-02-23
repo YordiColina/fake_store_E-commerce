@@ -42,11 +42,8 @@ class ProductNotifier extends StateNotifier<List<Product>> {
     return products;
   }
 
-  Future<List<Product>> getFilteredProducts(String query, List<Product> items) async {
-    final products = items.where((product) {
-      return product.title.toLowerCase().contains(query.toLowerCase()) ||
-          product.description.toLowerCase().contains(query.toLowerCase());
-    }).toList();
+  Future<List<Product>> getFilteredProducts(String query) async {
+    final products = await getFilteredProductsUseCase.execute(query);
     state = products;
     return products;
   }

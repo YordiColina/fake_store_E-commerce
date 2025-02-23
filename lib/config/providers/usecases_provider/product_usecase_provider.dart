@@ -1,3 +1,4 @@
+import 'package:fake_store_e_commerce/domain/usecases/product_usecases/get_filtered_products_usecase.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/usecases/product_usecases/get_product_usecase.dart';
 import '../../../domain/usecases/product_usecases/get_products_by_category_usecase.dart';
@@ -17,6 +18,11 @@ final getProductsUseCaseProvider = Provider((ref) {
 final getProductsByCategoryUseCaseProvider = Provider((ref) {
   final repository = ref.read(productRepositoryProvider);
   return GetProductsByCategoryUseCase(repository);
+});
+
+final getFilteredProductsUseCaseProvider = Provider((ref) {
+  final repository = ref.read(productRepositoryProvider);
+  return GetFilteredProductsUseCase(repository);
 });
 
 

@@ -6,7 +6,7 @@ class GetFilteredProductsUseCase {
 
   GetFilteredProductsUseCase(this._productRepository);
 
-  Future<List<Product>> execute() async {
-    return _productRepository.getProducts();
+  Future<List<Product>> execute(String query) async {
+    return _productRepository.searchProducts(query);
   }
 }

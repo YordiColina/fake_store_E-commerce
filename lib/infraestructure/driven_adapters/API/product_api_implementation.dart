@@ -35,10 +35,13 @@ class ProductApiImplementation implements ProductRepository {
   @override
   Future<List<Product>> searchProducts(String query) async {
     final result = await fakeStore.getAllProducts();
-    final filteredList = [];
+    var filteredList = [];
     return result.fold<List<Product>>(
           (error) => throw Exception('Error al obtener los productos: $error'),
-          (products) =>  products,
+          (products) =>  filteredList = products.where((product) {
+            return product.title.toLowerCase().contains(query.toLowerCase()) ||
+                product.description.toLowerCase().contains(query.toLowerCase());
+          }).toList(),
     );
   }
 }

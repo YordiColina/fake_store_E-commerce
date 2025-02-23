@@ -1,5 +1,6 @@
 import 'package:fake_store_e_commerce/presentation/screens/auth/login_screen.dart';
 import 'package:fake_store_e_commerce/presentation/screens/catalog/catalog_screen.dart';
+import 'package:fake_store_e_commerce/presentation/screens/search_screen.dart';
 import 'package:fake_store_package/models/products/product.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,6 +31,13 @@ final GoRouter router = GoRouter(
       name: 'Catalog',
       builder: (context, state) {
         return const CatalogScreen();
+      },
+    ),
+    GoRoute(
+      path: '/Search',
+      name: 'Search',
+      builder: (context, state) {
+        return const SearchScreen();
       },
     ),
     GoRoute(
