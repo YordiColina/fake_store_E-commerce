@@ -43,10 +43,10 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            context.go('/Home');
+            context.go('/Catalog');
           },
         ),
-        title: const Text('Catalog'),
+        title: const Text('Buscar Producto'),
         actions: [
           IconButton(
             icon: const Icon(Icons.shopping_cart),
@@ -72,20 +72,18 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
 
           const SizedBox(height: 20),
 
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: AtomicDropdownButton(
-                hintText: "Selecciona una categoría",
-                items: categories.categories,
-                onChanged: (value) {
-                  productNotifier.getProductsByCategory(value);
-                }),
-          ),
-
-          const SizedBox(height: 20),
           Expanded(
             child: items.isNotEmpty
                 ? AtomicTemplateCardList(
+              onTapFunction: () {
+                context.go(
+                  '/Detail',
+                  extra: {
+                    'product': items[5],
+                    'fromScreen': 'Home',
+                  },
+                );
+              },
               title: "",
               items: items.map((product) => {
                 'title': product.title,

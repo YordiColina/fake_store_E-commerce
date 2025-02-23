@@ -46,13 +46,27 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
             context.go('/Home');
           },
         ),
-        title: const Text('Catalog'),
+        title: const Text('Catalogo'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              context.go('/cart');
-            },
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  context.go('/Search');
+                },
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                onPressed: () {
+                  context.go('/cart');
+                },
+              ),
+
+            ],
           ),
         ],
       ),

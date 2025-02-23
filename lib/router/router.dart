@@ -44,9 +44,13 @@ final GoRouter router = GoRouter(
       path: '/Detail',
       name: 'Detail',
       builder: (context, state) {
-        final item = state.extra as Product;
-        return DetailScreen(product: item);
+        final data = state.extra as Map<String, dynamic>?;
+        final product = data?['product'] as Product;
+        final fromScreen = data?['fromScreen'] as String;
+
+        return DetailScreen(product: product, fromScreen: fromScreen);
       },
     ),
+
   ],
 );

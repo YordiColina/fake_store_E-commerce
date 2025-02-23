@@ -88,12 +88,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
 
               items.isNotEmpty
-                  ? AtomicCard(
-                titulo: items[5].title,
-                precio: items[5].price,
-                imageUrl: items[5].image,
-                categoria: items[5].category,
-              )
+                  ? GestureDetector(
+                    onTap: () {
+                      context.go(
+                        '/Detail',
+                        extra: {
+                          'product': items[5],
+                          'fromScreen': 'Home',
+                        },
+                      );
+                    },
+                    child: AtomicCard(
+                                    titulo: items[5].title,
+                                    precio: items[5].price,
+                                    imageUrl: items[5].image,
+                                    categoria: items[5].category,
+                                  ),
+                  )
                   : const CircularProgressIndicator(),
 
               const Divider(height: 2, thickness: 2),
@@ -104,6 +115,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ? SizedBox(
                 height: MediaQuery.of(context).size.height * 0.5,
                 child: AtomicTemplateCardList(
+                
                   title: "Nuestros productos destacados",
                   items: items.take(4).map((product) => {
                     'title': product.title,
@@ -111,6 +123,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     'image': product.image,
                     'category': product.category,
                     'description': product.description,
+                    'onTapFunction': () {
+                      context.go(
+                        '/Detail',
+                        extra: {
+                          'product': product,
+                          'fromScreen': 'Home',
+                        },
+                      );
+                    },
                   }).toList(),
                 ),
               )
