@@ -91,6 +91,15 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                 'image': product.image,
                 'category': product.category,
                 'description': product.description,
+                'onTapFunction': () {
+                  context.go(
+                    '/Detail',
+                    extra: {
+                      'product': product,
+                      'fromScreen': 'Search',
+                    },
+                  );
+                },
               }).toList(),
             )
                 : const Center(child: CircularProgressIndicator()),

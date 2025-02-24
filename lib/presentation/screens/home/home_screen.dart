@@ -36,11 +36,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               text: "Fake store",
               fontWeight: FontWeight.bold,
               size: TextSize.large,
-              color: Color.fromRGBO(158, 123, 187, 1.0),
+              color: Colors.white,
             ),
           ),
         ),
       ),
+      backgroundColor: Colors.lightBlue[50],
       body: ListView(
         children: [
           Column(

@@ -93,6 +93,15 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                           'image': product.image,
                           'category': product.category,
                           'description': product.description,
+                      'onTapFunction': () {
+                        context.go(
+                          '/Detail',
+                          extra: {
+                            'product': product,
+                            'fromScreen': 'Catalog',
+                          },
+                        );
+                      },
                         }).toList(),
                   )
                 : const Center(child: CircularProgressIndicator()),
