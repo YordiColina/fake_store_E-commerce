@@ -3,9 +3,8 @@ import 'package:fake_store_package/models/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../config/providers/notifiers_providers/auth_notifier_provider.dart';
 import '../../../config/providers/notifiers_providers/create_user_notifier_provider.dart';
-import '../../../config/providers/notifiers_providers/user_notifier_provider.dart';
+
 
 class RegisterScreen extends ConsumerWidget {
   const RegisterScreen({super.key});
@@ -47,7 +46,9 @@ class RegisterScreen extends ConsumerWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: AtomicTemplateRegister(
+          buttonColor: const Color.fromARGB(255, 2, 136, 209),
           labels: labels,
+          textColor: const Color.fromARGB(255, 38, 50, 56),
           onPressed: onRegister,
           buttonText: "Crear cuenta",
           fieldsNumber: labels.length,

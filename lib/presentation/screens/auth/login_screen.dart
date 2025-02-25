@@ -29,13 +29,17 @@ class LoginScreen extends ConsumerWidget{
     return AtomicLoginPage(
       icon: Icons.login,
       title: 'Fake store',
+      textColorLabel: const Color.fromARGB(255, 2, 136, 209),
       buttonText: 'Iniciar sesión',
       labels: ['Usuario', 'Contraseña'],
       fieldsNumber: 2,
       subTitle: 'Iniciar sesión',
-      titleColor: const Color.fromRGBO(158, 123, 187, 1.0),
-      iconColor: const Color.fromRGBO(158, 123, 187, 1.0),
+      titleColor: const Color.fromARGB(255, 38, 50, 56),
+      subTitleColor: const Color.fromARGB(255, 84, 110, 122),
+      iconColor: const Color.fromARGB(255, 2, 136, 209),
       iconSize: 50,
+      buttonColor: const Color.fromARGB(255, 2, 136, 209),
+      secundaryButtonColor: const Color.fromARGB(255, 176, 190, 197),
       goToRegister: () {context.go('/Register');},
       fontWeight: FontWeight.bold, onPressed: () { onLogin();  }, onFieldsFilled: (values) {
         isValidate = values;
