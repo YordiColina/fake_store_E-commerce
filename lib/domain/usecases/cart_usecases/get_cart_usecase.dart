@@ -1,4 +1,4 @@
-import '../../models/fake_cart_data/cart.dart';
+import 'package:fake_store_package/models/cart/cart.dart';
 import '../../models/fake_cart_data/repository/cart_repository.dart';
 
 

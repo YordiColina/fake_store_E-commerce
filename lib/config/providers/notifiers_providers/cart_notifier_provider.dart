@@ -1,6 +1,6 @@
 import 'package:fake_store_e_commerce/config/providers/usecases_provider/cart_usecases_provider.dart';
+import 'package:fake_store_package/models/cart/cart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../domain/models/fake_cart_data/cart.dart';
 import '../../notifiers/cart_notifier.dart';
 
 

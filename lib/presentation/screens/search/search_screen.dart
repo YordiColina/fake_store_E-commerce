@@ -1,11 +1,9 @@
 import 'package:atomic_design/atomic_design.dart';
-import 'package:atomic_design/molecules/atomic_dropdown_button.dart';
 import 'package:atomic_design/molecules/atomic_search_field.dart';
-import 'package:fake_store_e_commerce/config/providers/notifiers_providers/categories_notifier_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../config/providers/notifiers_providers/product_notifier_provider.dart';
+import '../../../../config/providers/notifiers_providers/product_notifier_provider.dart';
 
 class SearchScreen extends ConsumerStatefulWidget {
   const SearchScreen({super.key});
@@ -33,7 +31,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Widget build(BuildContext context) {
     final items = ref.watch(productNotifierProvider);
     final productNotifier = ref.read(productNotifierProvider.notifier);
-    final categories = ref.watch(categoriesNotifierProvider);
+
 
     return Scaffold(
       backgroundColor: Colors.lightBlue[50],
@@ -46,13 +44,32 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             context.go('/Catalog');
           },
         ),
-        title: const Text('Buscar Producto'),
+        title: const AtomicText(text: 'Buscar Producto',fontWeight: FontWeight.bold,
+          color: Color.fromARGB(255, 38, 50, 56), size: TextSize.medium),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              context.go('/cart');
-            },
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.shopping_cart,color: Color.fromARGB(255, 2, 136, 209),),
+                onPressed: () {
+                  context.go(
+                      '/Cart',
+                      extra: {
+                        'fromScreen': 'Search',
+                        'isFromDetail': false,
+                      });
+                },
+              ),
+              const SizedBox(width: 5),
+              IconButton(onPressed: () {
+                context.go(
+                  '/Support',
+                  extra: {
+                    'fromScreen': 'Search',
+                  },
+                );
+              }, icon: const Icon(Icons.support_agent, color: Color.fromARGB(255, 255, 111, 0),)),
+            ],
           ),
         ],
       ),
@@ -75,15 +92,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
           Expanded(
             child: items.isNotEmpty
                 ? AtomicTemplateCardList(
-              onTapFunction: () {
-                context.go(
-                  '/Detail',
-                  extra: {
-                    'product': items[5],
-                    'fromScreen': 'Home',
-                  },
-                );
-              },
+              cardColor: const Color.fromARGB(255, 179, 229, 252),
               title: "",
               items: items.map((product) => {
                 'title': product.title,

@@ -2,7 +2,6 @@ import 'package:atomic_design/atomic_design.dart';
 import 'package:atomic_design/organism/atomic_detail_card.dart';
 import 'package:fake_store_e_commerce/config/providers/notifiers_providers/cart_notifier_provider.dart';
 import 'package:fake_store_package/models/cart/cart.dart';
-import 'package:fake_store_package/models/cart/cart_request.dart';
 import 'package:fake_store_package/models/products/product.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -19,17 +18,8 @@ class DetailScreen extends ConsumerStatefulWidget {
 
 class _DetailScreenState extends ConsumerState<DetailScreen> {
   int quantity = 0;
-  List<CartProducts> cartProducts = [];
-
   @override
   Widget build(BuildContext context) {
-    final items = ref.watch(cartNotifierProvider);
-    final cartNotifier = ref.read(cartNotifierProvider.notifier);
-    cartNotifier.addCart(CartRequest(
-        userId: 1,
-        date: DateTime.now(),
-        products: []));
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.product.title),
@@ -40,11 +30,31 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
           },
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              context.go('/cart');
-            },
+          Row(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                onPressed: () {
+                    context.go(
+                      '/Cart',
+                      extra: {
+                        'fromScreen': '${widget.fromScreen}',
+                        'isFromDetail': true,
+                      },
+                    );
+
+                },
+              ),
+              const SizedBox(width: 5),
+              IconButton(onPressed: () {
+                context.go(
+                  '/Support',
+                  extra: {
+                    'fromScreen': '${widget.fromScreen}',
+                  },
+                );
+              }, icon: const Icon(Icons.support_agent)),
+            ],
           ),
         ],
       ),
@@ -70,11 +80,17 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                         if (quantity == 0) {
                           return;
                         } else {
+                          ref.read(cartNotifierProvider.notifier).addProductToCart(
+                            CartProducts(productId: widget.product.id, quantity: quantity),
+                            5, // Asegúrate de tener el userId disponible aquí
+                          );
                           context.go(
                             '/Cart',
                             extra: {
                               'product': widget.product,
                               'quantity': quantity,
+                              'fromScreen': widget.fromScreen,
+                              'isFromDetail': true,
                             },
                           );
                         }

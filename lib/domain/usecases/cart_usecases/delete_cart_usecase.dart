@@ -6,7 +6,7 @@ class DeleteCartUseCase {
 
   DeleteCartUseCase(this._cartRepository);
 
-  Future<void> execute(CartRequest cart,int id) async {
-    return _cartRepository.deleteCart(cart,id);
+  Future<void> execute(int id) async {
+    return _cartRepository.deleteCart(id);
   }
 }

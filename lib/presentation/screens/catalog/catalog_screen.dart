@@ -1,6 +1,5 @@
 import 'package:atomic_design/atomic_design.dart';
 import 'package:atomic_design/molecules/atomic_dropdown_button.dart';
-import 'package:atomic_design/molecules/atomic_search_field.dart';
 import 'package:fake_store_e_commerce/config/providers/notifiers_providers/categories_notifier_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,12 +45,13 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
             context.go('/Home');
           },
         ),
-        title: const Text('Catalogo'),
+        title: const AtomicText(text: 'Catalogo',  color: Color.fromARGB(255, 38, 50, 56),
+        size: TextSize.medium,fontWeight: FontWeight.bold),
         actions: [
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.search),
+                icon: const Icon(Icons.search, color: Color.fromARGB(255, 2, 136, 209)),
                 onPressed: () {
                   context.go('/Search');
                 },
@@ -60,11 +60,25 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                 width: 5,
               ),
               IconButton(
-                icon: const Icon(Icons.shopping_cart),
+                icon: const Icon(Icons.shopping_cart, color: Color.fromARGB(255, 2, 136, 209)),
                 onPressed: () {
-                  context.go('/cart');
+                  context.go(
+                      '/Cart',
+                      extra: {
+                      'fromScreen': 'Catalog',
+                      'isFromDetail': false,
+                      });
                 },
               ),
+              const SizedBox(width: 5),
+              IconButton(onPressed: () {
+                context.go(
+                  '/Support',
+                  extra: {
+                    'fromScreen': 'Catalog',
+                  },
+                );
+              }, icon: const Icon(Icons.support_agent, color: Color.fromARGB(255, 255, 111, 0))),
 
             ],
           ),
@@ -86,6 +100,8 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
           Expanded(
             child: items.isNotEmpty
                 ? AtomicTemplateCardList(
+              backgroundListColor: Colors.white,
+              cardColor: const Color.fromARGB(255, 179, 229, 252),
                     title: "",
                     items: items.map((product) => {
                           'title': product.title,

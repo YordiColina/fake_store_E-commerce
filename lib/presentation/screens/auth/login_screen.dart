@@ -15,7 +15,7 @@ class LoginScreen extends ConsumerWidget{
     List<String> isValidate = [];
     void onLogin() async {
       final authNotifier = ref.read(authNotifierProvider.notifier);
-      await authNotifier.login(LoginRequest(username: isValidate[0], password: isValidate[1])); // Llama a la función de autenticación
+      await authNotifier.login(LoginRequest(username: "mor_2314", password:  "83r5^_")); // Llama a la función de autenticación
 
       final loginSuccess = ref.read(authNotifierProvider); // Obtiene el estado actualizado
 

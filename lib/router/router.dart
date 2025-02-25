@@ -1,6 +1,6 @@
 import 'package:fake_store_e_commerce/presentation/screens/auth/login_screen.dart';
 import 'package:fake_store_e_commerce/presentation/screens/catalog/catalog_screen.dart';
-import 'package:fake_store_e_commerce/presentation/screens/search_screen.dart';
+import 'package:fake_store_e_commerce/presentation/screens/search/search_screen.dart';
 import 'package:fake_store_package/models/products/product.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,6 +8,7 @@ import '../presentation/screens/auth/register_screen.dart';
 import '../presentation/screens/cart/cart_screen.dart';
 import '../presentation/screens/details/detail_screen.dart';
 import '../presentation/screens/home/home_screen.dart';
+import '../presentation/screens/support/support_screen.dart';
 
 
 final GoRouter router = GoRouter(
@@ -56,13 +57,26 @@ final GoRouter router = GoRouter(
       path: '/Cart',
       name: 'Cart',
       builder: (context, state) {
-        final data = state.extra as Map<String, dynamic>?;
-        final product = data?['product'] as Product;
-        final quantity = data?['quantity'] as int;
+        final data = state.extra as Map<String, dynamic>? ?? {}; // Asegura que no sea null
+        final Product? product = data['product'] as Product?;
+        final int quantity = (data['quantity'] as int?) ?? 0;
+        final String fromScreen = (data['fromScreen'] as String?) ?? '';
+        final bool isFromDetail = (data['isFromDetail'] as bool?) ?? false;
 
-        return CartScreen(product: product, quantity:quantity );
+        return CartScreen(product, quantity: quantity, fromScreen: fromScreen, isFromDetail: isFromDetail);
       },
     ),
+
+    GoRoute(
+      path: '/Support',
+      name: 'Support',
+      builder: (context, state) {
+        final data = state.extra as Map<String, dynamic>?;
+        final fromScreen = data?['fromScreen'] as String;
+        return  SupportScreen(fromScreen: fromScreen,);
+      },
+    ),
+
 
   ],
 );
