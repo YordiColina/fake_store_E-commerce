@@ -21,7 +21,9 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.lightBlue[50],
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[50],
         title: Text(widget.product.title),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
@@ -33,7 +35,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.shopping_cart),
+                icon: const Icon(Icons.shopping_cart, color: Color.fromARGB(255, 2, 136, 209),),
                 onPressed: () {
                     context.go(
                       '/Cart',
@@ -53,7 +55,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                     'fromScreen': '${widget.fromScreen}',
                   },
                 );
-              }, icon: const Icon(Icons.support_agent)),
+              }, icon: const Icon(Icons.support_agent,color: Color.fromARGB(255, 255, 111, 0),)),
             ],
           ),
         ],
@@ -63,6 +65,8 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AtomicDetailCard(
+                cardColor: Colors.white,
+                borderCardColor: const Color.fromARGB(255, 1, 87, 155),
                 titulo: widget.product.title,
                 precio: widget.product.price,
                 imageUrl: widget.product.image,
@@ -75,6 +79,7 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
                 child: Row(
                   children: [
                     AtomicButton(
+                      color: const Color.fromARGB(255, 2, 136, 209),
                       label: "agregar producto",
                       onPressed: () {
                         if (quantity == 0) {

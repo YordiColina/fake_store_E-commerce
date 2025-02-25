@@ -1,4 +1,5 @@
 import 'package:atomic_design/templates/atomic_register_template.dart';
+import 'package:fake_store_e_commerce/config/providers/notifiers_providers/user_auth_local_notifier_provider.dart';
 import 'package:fake_store_package/models/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,8 @@ class RegisterScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<String> fieldsValues = [];
+    final userLocalNotifier = ref.read(userAuthLocalNotifierProvider.notifier);
+
 
     void onRegister() async {
       final createUserNotifier = ref.read(createUserNotifierProvider.notifier);
@@ -34,7 +37,8 @@ class RegisterScreen extends ConsumerWidget {
     // Escuchar cambios en `createUserNotifierProvider`
     ref.listen<bool>(createUserNotifierProvider, (previous, next) {
       if (next) {
-        context.go('/Login');
+        userLocalNotifier.saveUser(fieldsValues[1], fieldsValues[2]);
+        context.go('/');
       }
     });
 

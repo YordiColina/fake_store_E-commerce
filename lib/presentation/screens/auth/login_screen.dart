@@ -6,16 +6,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../config/providers/notifiers_providers/auth_notifier_provider.dart';
+import '../../../config/providers/notifiers_providers/user_auth_local_notifier_provider.dart';
 
 class LoginScreen extends ConsumerWidget{
-  const LoginScreen({super.key});
+
+ const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     List<String> isValidate = [];
     void onLogin() async {
       final authNotifier = ref.read(authNotifierProvider.notifier);
-      await authNotifier.login(LoginRequest(username: "mor_2314", password:  "83r5^_")); // Llama a la función de autenticación
+      final userLocalNotifier = ref.read(userAuthLocalNotifierProvider.notifier);
+      final userLocalData =  await userLocalNotifier.getUser();
+      print("User local data: $userLocalData");
+      await authNotifier.login(LoginRequest(username: isValidate[0] == userLocalData?['username'] ?
+      "mor_2314" : isValidate[0], password: isValidate[1] == userLocalData?['password'] ?
+      "83r5^_": isValidate[1])); // Llama a la función de autenticación
 
       final loginSuccess = ref.read(authNotifierProvider); // Obtiene el estado actualizado
 
@@ -33,13 +40,14 @@ class LoginScreen extends ConsumerWidget{
       buttonText: 'Iniciar sesión',
       labels: ['Usuario', 'Contraseña'],
       fieldsNumber: 2,
+      obscureText: true,
       subTitle: 'Iniciar sesión',
       titleColor: const Color.fromARGB(255, 38, 50, 56),
       subTitleColor: const Color.fromARGB(255, 84, 110, 122),
       iconColor: const Color.fromARGB(255, 2, 136, 209),
       iconSize: 50,
       buttonColor: const Color.fromARGB(255, 2, 136, 209),
-      secundaryButtonColor: const Color.fromARGB(255, 176, 190, 197),
+      secundaryButtonColor: const Color.fromARGB(255, 2, 136, 209),
       goToRegister: () {context.go('/Register');},
       fontWeight: FontWeight.bold, onPressed: () { onLogin();  }, onFieldsFilled: (values) {
         isValidate = values;

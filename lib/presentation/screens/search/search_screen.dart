@@ -19,6 +19,8 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   void initState() {
     super.initState();
     searchController = TextEditingController();
+    final productNotifier = ref.read(productNotifierProvider.notifier);
+    productNotifier.getAllProducts();
   }
 
   @override
@@ -73,47 +75,51 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
+      body: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10),
+        child: Column(
+          children: [
 
-          Padding(
-            padding: EdgeInsets.only(  top: MediaQuery.of(context).size.height * 0.080,
-              left: 20,
-              right: 20,),
-            child: AtomicSearchField(
-              controller: searchController,
-              onChanged: (query) {
-                productNotifier.getFilteredProducts(query);
-              },),
-          ),
+            Padding(
+              padding: EdgeInsets.only(  top: MediaQuery.of(context).size.height * 0.080,
+                left: 20,
+                right: 20,),
+              child: AtomicSearchField(
+                controller: searchController,
+                onChanged: (query) {
+                  productNotifier.getFilteredProducts(query);
+                },),
+            ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
 
-          Expanded(
-            child: items.isNotEmpty
-                ? AtomicTemplateCardList(
-              cardColor: const Color.fromARGB(255, 179, 229, 252),
-              title: "",
-              items: items.map((product) => {
-                'title': product.title,
-                'price': product.price,
-                'image': product.image,
-                'category': product.category,
-                'description': product.description,
-                'onTapFunction': () {
-                  context.go(
-                    '/Detail',
-                    extra: {
-                      'product': product,
-                      'fromScreen': 'Search',
-                    },
-                  );
-                },
-              }).toList(),
-            )
-                : const Center(child: CircularProgressIndicator()),
-          ),
-        ],
+            Expanded(
+              child: items.isNotEmpty
+                  ? AtomicTemplateCardList(
+                cardColor: Colors.white,
+                borderCardColor: const Color.fromARGB(255, 1, 87, 155),
+                title: "",
+                items: items.map((product) => {
+                  'title': product.title,
+                  'price': product.price,
+                  'image': product.image,
+                  'category': product.category,
+                  'description': product.description,
+                  'onTapFunction': () {
+                    context.go(
+                      '/Detail',
+                      extra: {
+                        'product': product,
+                        'fromScreen': 'Search',
+                      },
+                    );
+                  },
+                }).toList(),
+              )
+                  : const Center(child: CircularProgressIndicator()),
+            ),
+          ],
+        ),
       ),
     );
   }

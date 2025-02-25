@@ -54,7 +54,7 @@ class CartScreen extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            isFromDetail
+            isFromDetail && product != null
                 ? context.go('/Detail', extra: {'product': product, 'fromScreen': fromScreen})
                 : context.go("/$fromScreen");
           },
@@ -96,71 +96,80 @@ class CartScreen extends ConsumerWidget {
               final product = cartState.first?.products[index];
 
 
-              return Container(
-                margin: const EdgeInsets.all(8),
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Column(
-                  children: [
+              return Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Container(
+                  margin: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: const Color.fromARGB(255, 1, 87, 155)),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
 
-                    if (productInfo.isNotEmpty)
-                      AtomicText(text: productInfo[index].title, fontWeight: FontWeight.bold,
-                          size: TextSize.medium, textAlign: TextAlign.center),
-                    const SizedBox(height: 8),
-                    Image.network(productInfo[index].image, height: 100, width: 100, fit: BoxFit.cover),
-                    const SizedBox(height: 8),
-                    AtomicText(text: "Precio unitario: ${productInfo[index].price.toString()}\$",
-                        fontWeight: FontWeight.bold,
-                        size: TextSize.small, textAlign: TextAlign.center),
-                    const SizedBox(height: 8),
-                    AtomicText(text: " Total:${productInfo[index].price*product!.quantity}\$",
-                        fontWeight: FontWeight.bold,
-                        size: TextSize.small, textAlign: TextAlign.center),
+                      if (productInfo.isNotEmpty)
+                        AtomicText(text: productInfo[index].title, fontWeight: FontWeight.bold,
+                            size: TextSize.medium, textAlign: TextAlign.center),
+                      const SizedBox(height: 8),
+                      Image.network(productInfo[index].image, height: 100, width: 100, fit: BoxFit.cover),
+                      const SizedBox(height: 8),
+                      AtomicText(text: "Precio unitario: ${productInfo[index].price.toString()}\$",
+                          fontWeight: FontWeight.bold,
+                          size: TextSize.small, textAlign: TextAlign.center),
+                      const SizedBox(height: 8),
+                      AtomicText(text: " Total:${productInfo[index].price*product!.quantity}\$",
+                          fontWeight: FontWeight.bold,
+                          size: TextSize.small, textAlign: TextAlign.center),
 
-                    if (productInfo.isEmpty)
-                      const CircularProgressIndicator(),
-                    ListTile(
-                      title: Text('Producto ID: ${product.productId}'),
-                      subtitle: Text('Cantidad: ${product.quantity}'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: () {
-                              if (product.quantity > 1) {
-                                cartNotifier.editProductQuantity(5, product.productId, product.quantity - 1);
-                              } else {
+                      if (productInfo.isEmpty)
+                        const CircularProgressIndicator(
+                          color: Color.fromARGB(255, 1, 87, 155),
+                          backgroundColor: Color.fromARGB(255, 1, 87, 155),
+                        ),
+                      ListTile(
+                        title: Text('Producto ID: ${product.productId}'),
+                        subtitle: Text('Cantidad: ${product.quantity}'),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.remove),
+                              onPressed: () {
+                                if (product.quantity > 1) {
+                                  cartNotifier.editProductQuantity(5, product.productId, product.quantity - 1);
+                                } else {
+                                  cartNotifier.removeProductFromCart(5, product.productId);
+                                }
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                cartNotifier.editProductQuantity(5, product.productId, product.quantity + 1);
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
                                 cartNotifier.removeProductFromCart(5, product.productId);
-                              }
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: () {
-                              cartNotifier.editProductQuantity(5, product.productId, product.quantity + 1);
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () {
-                              cartNotifier.removeProductFromCart(5, product.productId);
-                            },
-                          ),
-                        ],
+                              },
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               );
             },
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: CircularProgressIndicator(
+          color: Color.fromARGB(255, 1, 87, 155),
+          backgroundColor: Color.fromARGB(255, 1, 87, 155),
+        )),
         error: (err, stack) => Center(child: Text('Error: $err')),
       ),
       bottomNavigationBar: Padding(
@@ -168,11 +177,18 @@ class CartScreen extends ConsumerWidget {
         child: AtomicButton(
           color: const Color.fromARGB(255, 2, 136, 209),
           onPressed: () {
-            cartNotifier.state = [];
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Pedido enviado')),
-            );
-            context.go('/Home');
+            if(cartState.isEmpty || cartState.first?.products.isEmpty == true) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('No hay productos en el carrito')),
+              );
+            } else {
+              cartNotifier.state = [];
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Pedido enviado')),
+              );
+              context.go('/Home');
+            }
+
           },
           label: 'Enviar pedido, total: ${totalPrice.toStringAsFixed(2)}\$',
         ),
