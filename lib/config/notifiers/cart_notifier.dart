@@ -30,11 +30,12 @@ class CartNotifier extends StateNotifier<List<Cart>> {
     final cartIndex = state.indexWhere((cart) => cart.userId == userId);
 
     if (cartIndex != -1) {
-      // 🛒 Si el carrito existe, actualizamos el producto dentro del carrito
+      //  Si el carrito existe, actualizamos el producto dentro del carrito
       final cart = state[cartIndex];
       final updatedProducts = List<CartProducts>.from(cart.products);
 
-      final productIndex = updatedProducts.indexWhere((p) => p.productId == product.productId);
+      final productIndex =
+          updatedProducts.indexWhere((p) => p.productId == product.productId);
       if (productIndex != -1) {
         // Si el producto ya está en el carrito, sumamos la cantidad
         updatedProducts[productIndex] = CartProducts(
@@ -55,11 +56,13 @@ class CartNotifier extends StateNotifier<List<Cart>> {
       );
 
       // Simulación de actualización en FakeStore
-      await updateCartUseCase.execute(CartRequest(
-        userId: cart.userId,
-        date: cart.date,
-        products: updatedProducts,
-      ), cart.id);
+      await updateCartUseCase.execute(
+          CartRequest(
+            userId: cart.userId,
+            date: cart.date,
+            products: updatedProducts,
+          ),
+          cart.id);
 
       state = [
         ...state..[cartIndex] = updatedCart,
@@ -83,8 +86,9 @@ class CartNotifier extends StateNotifier<List<Cart>> {
     }
   }
 
-  /// ✅ Editar la cantidad de un producto en el carrito
-  Future<void> editProductQuantity(int userId, int productId, int newQuantity) async {
+  ///  Editar la cantidad de un producto en el carrito
+  Future<void> editProductQuantity(
+      int userId, int productId, int newQuantity) async {
     final cartIndex = state.indexWhere((cart) => cart.userId == userId);
     if (cartIndex == -1) return;
 
@@ -103,12 +107,13 @@ class CartNotifier extends StateNotifier<List<Cart>> {
       products: updatedProducts,
     );
 
-
-    await updateCartUseCase.execute(CartRequest(
-      userId: cart.userId,
-      date: cart.date,
-      products: updatedProducts,
-    ), cart.id);
+    await updateCartUseCase.execute(
+        CartRequest(
+          userId: cart.userId,
+          date: cart.date,
+          products: updatedProducts,
+        ),
+        cart.id);
 
     state = [
       ...state..[cartIndex] = updatedCart,
@@ -125,13 +130,14 @@ class CartNotifier extends StateNotifier<List<Cart>> {
     return total;
   }
 
-  /// ✅ Eliminar un producto del carrito
+
   Future<void> removeProductFromCart(int userId, int productId) async {
     final cartIndex = state.indexWhere((cart) => cart.userId == userId);
     if (cartIndex == -1) return;
 
     final cart = state[cartIndex];
-    final updatedProducts = cart.products.where((p) => p.productId != productId).toList();
+    final updatedProducts =
+        cart.products.where((p) => p.productId != productId).toList();
 
     if (updatedProducts.isEmpty) {
       // Si no quedan productos, eliminamos el carrito
@@ -146,11 +152,13 @@ class CartNotifier extends StateNotifier<List<Cart>> {
         products: updatedProducts,
       );
 
-      await updateCartUseCase.execute(CartRequest(
-        userId: cart.userId,
-        date: cart.date,
-        products: updatedProducts,
-      ), cart.id);
+      await updateCartUseCase.execute(
+          CartRequest(
+            userId: cart.userId,
+            date: cart.date,
+            products: updatedProducts,
+          ),
+          cart.id);
 
       state = [
         ...state..[cartIndex] = updatedCart,
