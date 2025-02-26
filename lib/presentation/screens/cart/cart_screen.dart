@@ -82,7 +82,7 @@ class CartScreen extends ConsumerWidget {
         ],
       ),
       body: cartState.isEmpty
-          ? const Center(child: Text('Tu carrito está vacío'))
+          ? const Center(child: AtomicText(text: 'Tu carrito está vacío',fontWeight: FontWeight.bold,))
           : imagesAsync.when(
 
         data: (productInfo) {
@@ -113,7 +113,7 @@ class CartScreen extends ConsumerWidget {
                         AtomicText(text: productInfo[index].title, fontWeight: FontWeight.bold,
                             size: TextSize.medium, textAlign: TextAlign.center),
                       const SizedBox(height: 8),
-                      Image.network(productInfo[index].image, height: 100, width: 100, fit: BoxFit.cover),
+                      Image.network(productInfo[index].image, height: 100, width: 100, fit: BoxFit.contain),
                       const SizedBox(height: 8),
                       AtomicText(text: "Precio unitario: ${productInfo[index].price.toString()}\$",
                           fontWeight: FontWeight.bold,
@@ -176,19 +176,22 @@ class CartScreen extends ConsumerWidget {
         padding: const EdgeInsets.all(16.0),
         child: AtomicButton(
           color: const Color.fromARGB(255, 2, 136, 209),
-          onPressed: () {
+          onPressed: () async {
             if(cartState.isEmpty || cartState.first?.products.isEmpty == true) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('No hay productos en el carrito')),
               );
             } else {
               cartNotifier.state = [];
+              final productNotifier = ref.read(productNotifierProvider.notifier);
+              final items = ref.watch(productNotifierProvider);
+              productNotifier.getAllProducts();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Pedido enviado')),
               );
-              context.go('/Home');
+                await productNotifier.getAllProducts();
+                context.go('/Home');
             }
-
           },
           label: 'Enviar pedido, total: ${totalPrice.toStringAsFixed(2)}\$',
         ),
