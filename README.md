@@ -32,3 +32,4 @@ La aplicación sigue una arquitectura limpia, utilizando  `Riverpod` para maneja
 - la aplicación usa la librería 'url_launcher' para acceder al numero o email de soporte.
 - la api fakestore simula gran parte de sus acciones no guarda en su base de datos cuentas creadas ni carritos por ende estas funcionalidades 
 se pidieron a la api pero se simularon en local .
+- Se usaron tonalidades claras de colores azules y blancos para la aplicación y se busco un diseño minimalista y limpio. 
