@@ -4,6 +4,7 @@ import 'package:fake_store_e_commerce/config/providers/notifiers_providers/categ
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../config/providers/notifiers_providers/cart_notifier_provider.dart';
 import '../../../config/providers/notifiers_providers/product_notifier_provider.dart';
 
 class CatalogScreen extends ConsumerStatefulWidget {
@@ -35,6 +36,8 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
     final items = ref.watch(productNotifierProvider);
     final productNotifier = ref.read(productNotifierProvider.notifier);
     final categories = ref.watch(categoriesNotifierProvider);
+    final cartState = ref.watch(cartNotifierProvider);
+    final cartNotifier = ref.read(cartNotifierProvider.notifier);
 
     return Scaffold(
       backgroundColor: Colors.lightBlue[50],
@@ -61,16 +64,46 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
               const SizedBox(
                 width: 5,
               ),
-              IconButton(
-                icon: const Icon(Icons.shopping_cart, color: Color.fromARGB(255, 2, 136, 209)),
-                onPressed: () {
-                  context.go(
-                      '/Cart',
-                      extra: {
-                      'fromScreen': 'Catalog',
-                      'isFromDetail': false,
-                      });
-                },
+              Stack(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.shopping_cart),
+                    color: const Color.fromARGB(255, 2, 136, 209),
+                    onPressed: () {
+                      context.go(
+                          '/Cart',
+                          extra: {
+                            'fromScreen': 'Catalog',
+                            'isFromDetail': false,
+                          });
+                    },
+                  ),
+                  if (cartState.isNotEmpty && cartState.first!.products.isNotEmpty) // Si hay productos en el carrito
+                    Positioned(
+                      right: 6,
+                      top: 6,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 20,
+                          minHeight: 20,
+                        ),
+                        child: Text(
+                          cartNotifier.getTotalProducts().toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
               ),
               const SizedBox(width: 5),
               IconButton(onPressed: () {

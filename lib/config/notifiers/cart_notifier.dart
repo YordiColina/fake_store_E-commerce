@@ -103,6 +103,7 @@ class CartNotifier extends StateNotifier<List<Cart>> {
       products: updatedProducts,
     );
 
+
     await updateCartUseCase.execute(CartRequest(
       userId: cart.userId,
       date: cart.date,
@@ -112,6 +113,16 @@ class CartNotifier extends StateNotifier<List<Cart>> {
     state = [
       ...state..[cartIndex] = updatedCart,
     ];
+  }
+
+  int getTotalProducts() {
+    int total = 0;
+    state.forEach((cart) {
+      cart.products.forEach((product) {
+        total += product.quantity;
+      });
+    });
+    return total;
   }
 
   /// ✅ Eliminar un producto del carrito

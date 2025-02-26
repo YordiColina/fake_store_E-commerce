@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../config/providers/notifiers_providers/auth_notifier_provider.dart';
+import '../../../config/providers/notifiers_providers/cart_notifier_provider.dart';
 import '../../../config/providers/notifiers_providers/product_notifier_provider.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -28,6 +29,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final items = ref.watch(productNotifierProvider);
     final authNotifier = ref.watch(authNotifierProvider.notifier);
     final categories = ref.watch(categoriesNotifierProvider);
+    final cartState = ref.watch(cartNotifierProvider);
+    final cartNotifier = ref.read(cartNotifierProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -48,33 +51,63 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               context.go('/Search');
             },
           ),
-          const SizedBox(
-            width: 5,
-          ),
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            color: const Color.fromARGB(255, 2, 136, 209),
-            onPressed: () {
-              context.go(
-                '/Cart',
-                extra: {
-                  'fromScreen': 'Home',
-                  'isFromDetail': false,
+          const SizedBox(width: 5),
+
+          // Icono del carrito con badge de cantidad de productos
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                color: const Color.fromARGB(255, 2, 136, 209),
+                onPressed: () {
+                  context.go(
+                    '/Cart',
+                    extra: {
+                      'fromScreen': 'Home',
+                      'isFromDetail': false,
+                    },
+                  );
                 },
-              );
-            },
+              ),
+              if (cartState.isNotEmpty && cartState.first!.products.isNotEmpty) // Si hay productos en el carrito
+                Positioned(
+                  right: 6,
+                  top: 6,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 20,
+                      minHeight: 20,
+                    ),
+                    child: Text(
+                      cartNotifier.getTotalProducts().toString(),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+            ],
           ),
+
           const SizedBox(width: 10),
           IconButton(
             color: const Color.fromARGB(255, 255, 111, 0),
-              onPressed: () {
-            context.go(
-              '/Support',
-              extra: {
-                'fromScreen': 'Home',
-              },
-            );
-          }, icon: const Icon(Icons.support_agent)),
+            onPressed: () {
+              context.go(
+                '/Support',
+                extra: {'fromScreen': 'Home'},
+              );
+            },
+            icon: const Icon(Icons.support_agent),
+          ),
         ],
       ),
       backgroundColor: Colors.lightBlue[50],

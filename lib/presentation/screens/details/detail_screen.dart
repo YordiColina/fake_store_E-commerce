@@ -20,6 +20,8 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
   int quantity = 0;
   @override
   Widget build(BuildContext context) {
+    final cartState = ref.watch(cartNotifierProvider);
+    final cartNotifier = ref.read(cartNotifierProvider.notifier);
     return Scaffold(
       backgroundColor: Colors.lightBlue[50],
       appBar: AppBar(
@@ -34,18 +36,47 @@ class _DetailScreenState extends ConsumerState<DetailScreen> {
         actions: [
           Row(
             children: [
-              IconButton(
-                icon: const Icon(Icons.shopping_cart, color: Color.fromARGB(255, 2, 136, 209),),
-                onPressed: () {
-                    context.go(
-                      '/Cart',
-                      extra: {
-                        'fromScreen': '${widget.fromScreen}',
-                        'isFromDetail': true,
-                      },
-                    );
-
-                },
+              Stack(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.shopping_cart),
+                    color: const Color.fromARGB(255, 2, 136, 209),
+                    onPressed: () {
+                      context.go(
+                        '/Cart',
+                        extra: {
+                          'fromScreen': '${widget.fromScreen}',
+                          'isFromDetail': true,
+                        },
+                      );
+                    },
+                  ),
+                  if (cartState.isNotEmpty && cartState.first!.products.isNotEmpty) // Si hay productos en el carrito
+                    Positioned(
+                      right: 6,
+                      top: 6,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 20,
+                          minHeight: 20,
+                        ),
+                        child: Text(
+                          cartNotifier.getTotalProducts().toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
               ),
               const SizedBox(width: 5),
               IconButton(onPressed: () {
